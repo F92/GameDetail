@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/discuss_container"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:paddingBottom="20.0dip"
+    android:paddingTop="18.0dip"
+    android:background="#f0f2f4"
+    android:layout_marginTop="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/title">
+        <ImageView
+            android:id="@+id/image_iv"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="25dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/gou"/>
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/image_iv"
+            android:layout_marginLeft="20.0dip"
+            android:layout_marginRight="10.0dip"
+            android:layout_toRightOf="@id/image_iv"
+            android:ellipsize="end"
+            android:lineSpacingExtra="3.0dip"
+            android:maxLines="2"
+            android:minLines="2"
+            android:textColor="@color/item_column_page_textcolor_title"
+            android:textSize="17.0sp"
+            android:text="巴西未来之国"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="120dp"
+        android:id="@+id/content">
+
+        <TextView
+            android:id="@+id/text_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="60dp"
+            android:text="总价8.00￥ 实付￥8.00"
+            android:textColor="@color/item_column_page_textcolor_title"
+            android:textSize="15dp" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

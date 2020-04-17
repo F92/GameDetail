@@ -15,7 +15,7 @@ public class DiscussFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.item_discuss_mian,container,false);
+        View view = inflater.inflate(R.layout.item_discuss_news,container,false);
         return view;
     }
 
