@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/discuss_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="20.0dip"
+    android:paddingTop="18.0dip"
+    android:background="#f0f2f4">
+
+    <ImageView
+        android:id="@+id/image_iv"
+        android:layout_width="40dip"
+        android:layout_height="40dip"
+        android:layout_marginLeft="14.0dip"
+        android:layout_marginTop="15dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/gou"/>
+    <TextView
+        android:id="@+id/user_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/image_iv"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginRight="10.0dip"
+        android:layout_toRightOf="@id/image_iv"
+        android:ellipsize="end"
+        android:lineSpacingExtra="3.0dip"
+        android:maxLines="2"
+        android:minLines="2"
+        android:textColor="@color/item_column_page_textcolor_title"
+        android:textSize="14dp"
+        android:text="巴西未来之国"/>
+
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/image_iv"
+        android:layout_below="@+id/user_tv"
+        android:orientation="vertical"
+        android:layout_marginLeft="15dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:padding="8dp"
+            android:background="#B0C4DE"
+            android:id="@+id/rcomment"/>
+
+        <TextView
+            android:id="@+id/content_tv"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@id/image_iv"
+            android:text="移动端游戏分销交流平台研究"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+    </LinearLayout>
+
+</RelativeLayout>

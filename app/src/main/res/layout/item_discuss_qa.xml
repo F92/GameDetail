@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/discuss_container"
     android:layout_width="match_parent"
     android:layout_height="250dp"
@@ -11,7 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:id="@+id/title">
+        android:id="@+id/discuss_title">
         <ImageView
             android:id="@+id/image_iv"
             android:layout_width="40dip"
@@ -27,7 +28,7 @@
             android:layout_marginRight="13.0dip"
             android:src="@drawable/arrow_right_grey" />
         <TextView
-            android:id="@+id/title_tv"
+            android:id="@+id/user_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/image_iv"
@@ -48,28 +49,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="60dp"
-        android:id="@+id/content">
+        android:id="@+id/discuss_content">
 
         <TextView
-            android:id="@+id/text_title_tv"
+            android:id="@+id/title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="14dp"
+            android:layout_marginLeft="25dp"
             android:text="移动端游戏分销交流平台研究"
             android:textColor="@color/item_column_page_textcolor_title"
             android:textStyle="bold"
             android:textSize="20dp" />
         <TextView
-            android:id="@+id/text_content_tv"
+            android:id="@+id/content_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="60dp"
             android:layout_marginLeft="30dp"
             android:text="移动端游戏分销交流平台研究"
             android:textColor="@color/item_column_page_textcolor_author"
             android:textSize="15dp" />
 
-    </RelativeLayout>
 
+    </RelativeLayout>
 
 </RelativeLayout>

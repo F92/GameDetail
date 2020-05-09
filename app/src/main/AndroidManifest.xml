@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
+        android:windowSoftInputMode="adjustResize"
         android:networkSecurityConfig="@xml/network_config"
         android:name=".app.OwspaceApplication"
         android:allowBackup="true"
@@ -36,18 +37,20 @@
         <activity android:name=".view.activity.DetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="fullSensor"/>
-        <activity android:name=".view.activity.VideoDetailActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="fullSensor"/>
-        <activity android:name=".view.activity.AudioDetailActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="fullSensor"/>
         <activity android:name=".view.activity.SettingsActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="fullSensor"/>
         <activity android:name=".view.activity.DiscussActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="fullSensor"/>
+        <activity android:name=".view.activity.ArticalDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="fullSensor"/>
+        <activity android:name=".view.activity.DiscussContentActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="fullSensor"/>
+
+
         <service android:name=".player.PlaybackService">
             <intent-filter>
                 <action android:name="com.github.baby.owspace.ACTION.PLAY_TOGGLE"/>

@@ -6,30 +6,22 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.github.baby.owspace.R;
 import com.github.baby.owspace.app.OwspaceApplication;
-import com.github.baby.owspace.di.components.DaggerArtComponent;
 import com.github.baby.owspace.di.components.DaggerDiscussComponent;
-import com.github.baby.owspace.di.modules.ArtModule;
 import com.github.baby.owspace.di.modules.DiscussModule;
 import com.github.baby.owspace.model.entity.ArticalList;
 import com.github.baby.owspace.model.entity.DiscussContentList;
-import com.github.baby.owspace.model.entity.DiscussList;
 import com.github.baby.owspace.model.entity.DiscussNewList;
-import com.github.baby.owspace.presenter.ArticalPresenter;
 import com.github.baby.owspace.presenter.DiscussContract;
 import com.github.baby.owspace.presenter.DiscussPresenter;
 import com.github.baby.owspace.util.AppUtil;
-import com.github.baby.owspace.view.adapter.DiscussNewsAdapter;
-import com.github.baby.owspace.view.adapter.GameMainAdapter;
+import com.github.baby.owspace.view.adapter.DiscussNewAdapter;
 import com.github.baby.owspace.view.widget.CustomPtrHeader;
 import com.github.baby.owspace.view.widget.DividerItemDecoration;
 
@@ -43,7 +35,8 @@ import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
-public class DiscussNewsFragment extends Fragment implements DiscussContract.View {
+public class DiscussQAFragment extends Fragment implements DiscussContract.View {
+
 
     @BindView(R.id.recycleView)
     RecyclerView recycleView;
@@ -52,7 +45,7 @@ public class DiscussNewsFragment extends Fragment implements DiscussContract.Vie
     @Inject
     DiscussPresenter discussPresenter;
 
-    private DiscussNewsAdapter discussNewsAdapter;
+    private DiscussNewAdapter discussNewAdapter;
     private int page = 1;
     private int mode = 1;
     private boolean isRefresh;
@@ -62,7 +55,7 @@ public class DiscussNewsFragment extends Fragment implements DiscussContract.Vie
     private String gameName;
 
     public static Fragment instance(String gameName) {
-        Fragment fragment = new DiscussNewsFragment();
+        Fragment fragment = new DiscussNewFragment();
         Bundle bundle = new Bundle();
         bundle.putString("gameName",gameName);
         fragment.setArguments(bundle);
@@ -71,8 +64,9 @@ public class DiscussNewsFragment extends Fragment implements DiscussContract.Vie
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.discuss_list_layout, container, false);
+        View root = inflater.inflate(R.layout.qa_list_layout, container, false);
         ButterKnife.bind(this, root);
+
         return root;
     }
 
@@ -83,8 +77,8 @@ public class DiscussNewsFragment extends Fragment implements DiscussContract.Vie
         this.gameName = gameName;
         initPresenter();
         initView();
-    }
 
+    }
     private void initPresenter(){
         DaggerDiscussComponent.builder()
                 .discussModule(new DiscussModule(this))
@@ -93,17 +87,17 @@ public class DiscussNewsFragment extends Fragment implements DiscussContract.Vie
                 .inject(this);
     }
     private void loadData() {
-        discussPresenter.getArtical(gameName);
+        discussPresenter.getQA(gameName);
     }
 
     private void initView() {
 
 
         deviceId = AppUtil.getDeviceId(getActivity());
-        discussNewsAdapter = new DiscussNewsAdapter(getActivity());
+        discussNewAdapter = new DiscussNewAdapter(getActivity());
         recycleView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recycleView.addItemDecoration(new DividerItemDecoration(getActivity()));
-        recycleView.setAdapter(discussNewsAdapter);
+        recycleView.setAdapter(discussNewAdapter);
         mPtrFrame.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
@@ -151,8 +145,8 @@ public class DiscussNewsFragment extends Fragment implements DiscussContract.Vie
         hasMore = false;
         if (!isRefresh){
             //显示没有更多
-            discussNewsAdapter.setHasMore(false);
-            discussNewsAdapter.notifyItemChanged(discussNewsAdapter.getItemCount()-1);
+            discussNewAdapter.setHasMore(false);
+            discussNewAdapter.notifyItemChanged(discussNewAdapter.getItemCount()-1);
         }
     }
 
@@ -161,23 +155,24 @@ public class DiscussNewsFragment extends Fragment implements DiscussContract.Vie
 
     }
 
+
     @Override
     public void updateListNews(List<ArticalList> itemList) {
-        mPtrFrame.refreshComplete();
-        if (isRefresh) {
-            discussNewsAdapter.setHasMore(false);
-            discussNewsAdapter.setError(true);
-            isRefresh = false;
-            discussNewsAdapter.replaceAllData(itemList);
-            discussNewsAdapter.setError(false);
-        } else {
-            discussNewsAdapter.setArtList(itemList);
-        }
+
     }
 
     @Override
     public void updateListDiscuss(List<DiscussNewList> itemList) {
-
+        mPtrFrame.refreshComplete();
+        if (isRefresh) {
+            discussNewAdapter.setHasMore(false);
+            discussNewAdapter.setError(true);
+            isRefresh = false;
+            discussNewAdapter.replaceAllData(itemList);
+            discussNewAdapter.setError(false);
+        } else {
+            discussNewAdapter.setArtList(itemList);
+        }
     }
 
     @Override
@@ -189,8 +184,8 @@ public class DiscussNewsFragment extends Fragment implements DiscussContract.Vie
     public void showOnFailure() {
         if (!isRefresh){
             //显示失败
-            discussNewsAdapter.setError(true);
-            discussNewsAdapter.notifyItemChanged(discussNewsAdapter.getItemCount()-1);
+            discussNewAdapter.setError(true);
+            discussNewAdapter.notifyItemChanged(discussNewAdapter.getItemCount()-1);
         }else{
             Toast.makeText(getActivity(),"刷新失败",Toast.LENGTH_SHORT).show();
         }

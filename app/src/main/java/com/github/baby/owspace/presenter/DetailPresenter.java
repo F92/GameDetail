@@ -7,6 +7,7 @@ import com.github.baby.owspace.model.entity.Result;
 
 import javax.inject.Inject;
 
+import rx.Observer;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -27,11 +28,11 @@ public class DetailPresenter implements DetailContract.Presenter {
     }
 
     @Override
-    public void getDetail(String itemId) {
-        apiService.getDetail("api", "getPost", itemId, 1)
+    public void getDetail(int gameId) {
+        apiService.getArticalDetail(gameId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Result.Data<DetailEntity>>() {
+                .subscribe(new Observer<String>() {
                     @Override
                     public void onCompleted() {
 
@@ -39,13 +40,37 @@ public class DetailPresenter implements DetailContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        view.showOnFailure();
+
                     }
 
                     @Override
-                    public void onNext(Result.Data<DetailEntity> detailEntityData) {
-                        view.updateListUI(detailEntityData.getDatas());
+                    public void onNext(String s) {
+                        view.updateListUI(s);
                     }
                 });
     }
+
+    @Override
+    public void getArticalDetail(int articalId) {
+        apiService.getDiscussArticalDetail(articalId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        view.updateListUI(s);
+                    }
+                });
+    }
+
 }

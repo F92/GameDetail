@@ -1,7 +1,6 @@
 package com.github.baby.owspace.view.fragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,13 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.github.baby.owspace.R;
 import com.github.baby.owspace.app.GlideApp;
-import com.github.baby.owspace.model.entity.Item;
-import com.github.baby.owspace.view.activity.AudioDetailActivity;
+import com.github.baby.owspace.model.entity.HomeList;
 import com.github.baby.owspace.view.activity.DetailActivity;
-import com.github.baby.owspace.view.activity.VideoDetailActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,12 +32,6 @@ public class MainFragment extends Fragment {
     ImageView imageIv;
     @BindView(R.id.type_container)
     LinearLayout typeContainer;
-    @BindView(R.id.comment_tv)
-    TextView commentTv;
-    @BindView(R.id.like_tv)
-    TextView likeTv;
-    @BindView(R.id.readcount_tv)
-    TextView readcountTv;
     @BindView(R.id.title_tv)
     TextView titleTv;
     @BindView(R.id.content_tv)
@@ -50,21 +40,15 @@ public class MainFragment extends Fragment {
     TextView authorTv;
     @BindView(R.id.type_tv)
     TextView typeTv;
-    @BindView(R.id.time_tv)
-    TextView timeTv;
-    @BindView(R.id.image_type)
-    ImageView imageType;
-    @BindView(R.id.download_start_white)
-    ImageView downloadStartWhite;
     @BindView(R.id.home_advertise_iv)
     ImageView homeAdvertiseIv;
     @BindView(R.id.pager_content)
     RelativeLayout pagerContent;
 
-    public static Fragment instance(Item item) {
+    public static Fragment instance(HomeList homeList) {
         Fragment fragment = new MainFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelable("item", item);
+        bundle.putSerializable("homeList",homeList);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -80,72 +64,21 @@ public class MainFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        final Item item = getArguments().getParcelable("item");
-        final int model = Integer.valueOf(item.getModel());
-        if (model == 5){
-            pagerContent.setVisibility(View.GONE);
-            homeAdvertiseIv.setVisibility(View.VISIBLE);
-            GlideApp.with(this.getContext()).load(item.getThumbnail()).centerCrop().into(homeAdvertiseIv);
-        }else{
-            pagerContent.setVisibility(View.VISIBLE);
-            homeAdvertiseIv.setVisibility(View.GONE);
-            title = item.getTitle();
-            GlideApp.with(this.getContext()).load(item.getThumbnail()).centerCrop().into(imageIv);
-            commentTv.setText(item.getComment());
-            likeTv.setText(item.getGood());
-            readcountTv.setText(item.getView());
-            titleTv.setText(item.getTitle());
-            contentTv.setText(item.getExcerpt());
-            authorTv.setText(item.getAuthor());
-            typeTv.setText(item.getCategory());
-            switch (model) {
-                case 2:
-                    imageType.setVisibility(View.VISIBLE);
-                    downloadStartWhite.setVisibility(View.GONE);
-                    imageType.setImageResource(R.drawable.library_video_play_symbol);
-                    break;
-                case 3:
-                    imageType.setVisibility(View.VISIBLE);
-                    downloadStartWhite.setVisibility(View.VISIBLE);
-                    imageType.setImageResource(R.drawable.library_voice_play_symbol);
-                    break;
-                default:
-                    downloadStartWhite.setVisibility(View.GONE);
-                    imageType.setVisibility(View.GONE);
-            }
-        }
+        final HomeList homeList = (HomeList) getArguments().getSerializable("homeList");
+        GlideApp.with(this.getContext()).load(homeList.getGameImage()).centerCrop().into(imageIv);
+        titleTv.setText(homeList.getGameName());
+        contentTv.setText(homeList.getGameIntroduce());
+        authorTv.setText(homeList.getUserName());
         typeContainer.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Intent intent;
-                switch (model){
-                    case 5:
-                        Uri uri = Uri.parse(item.getHtml5());
-                        intent = new Intent(Intent.ACTION_VIEW,uri);
-                        startActivity(intent);
-                        break;
-                    case 3:
-                        intent = new Intent(getActivity(), AudioDetailActivity.class);
-                        intent.putExtra("item",item);
-                        startActivity(intent);
-                        break;
-                    case 2:
-                        intent = new Intent(getActivity(), VideoDetailActivity.class);
-                        intent.putExtra("item",item);
-                        startActivity(intent);
-                        break;
-                    case 1:
-                        intent = new Intent(getActivity(), DetailActivity.class);
-                        intent.putExtra("item",item);
-                        startActivity(intent);
-                        break;
-                    default:
-                        intent = new Intent(getActivity(), DetailActivity.class);
-                        intent.putExtra("item",item);
-                        startActivity(intent);
-                }
+                intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra("homeList",homeList);
+                startActivity(intent);
             }
         });
+
     }
 
     @Override

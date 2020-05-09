@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c72d570e-f766-4e07-a733-8abce8d7483d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/model/entity/DiscussList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/model/entity/HomeList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/adapter/DiscussMainAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/adapter/GameMainAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/fragment/GameFragment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/item_discuss.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/item_discuss_discuss.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/item_discuss_qa.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/di/components/ArtComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/di/components/ArtComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/di/components/DetailComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/di/components/DetailComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/di/modules/NetModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/di/modules/NetModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/model/api/ApiService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/model/api/ApiService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/presenter/ArticalContract.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/presenter/ArticalContract.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/presenter/ArticalPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/presenter/ArticalPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/presenter/DetailContract.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/presenter/DetailContract.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/presenter/DetailPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/presenter/DetailPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/presenter/MainContract.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/presenter/MainContract.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/presenter/MainPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/presenter/MainPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/activity/ArtActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/activity/ArtActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/activity/AudioDetailActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/activity/DailyActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/activity/DailyActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/activity/DetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/activity/DetailActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/activity/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/activity/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/activity/VideoDetailActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/adapter/ArtRecycleViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/adapter/ArtRecycleViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/adapter/VerticalPagerAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/adapter/VerticalPagerAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/adapter/VerticalRecycleViewAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/adapter/VerticalRecycleViewAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/fragment/ArtFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/fragment/ArtFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/fragment/DiscussFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/fragment/DiscussFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/fragment/MainFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../java/com/github/baby/owspace/view/fragment/MainFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/activity_art_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/activity_art_detail.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/item_discuss_mian.xml" beforeDir="false" afterPath="$PROJECT_DIR$/item_discuss_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/item_main_page.xml" beforeDir="false" afterPath="$PROJECT_DIR$/item_main_page.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../build.gradle" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../.." />
+  </component>
+  <component name="ProjectId" id="1bWi1x7AHgtWYy6GZokDlvOQPH8" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c72d570e-f766-4e07-a733-8abce8d7483d" name="Default Changelist" comment="" />
+      <created>1588754038608</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1588754038608</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

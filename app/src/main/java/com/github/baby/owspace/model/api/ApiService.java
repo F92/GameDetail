@@ -1,12 +1,14 @@
 package com.github.baby.owspace.model.api;
 
 import com.github.baby.owspace.model.entity.DetailEntity;
+import com.github.baby.owspace.model.entity.HomeList;
 import com.github.baby.owspace.model.entity.Item;
 import com.github.baby.owspace.model.entity.Result;
 import com.github.baby.owspace.model.entity.SplashEntity;
 
 import java.util.List;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 
@@ -64,4 +66,31 @@ public interface ApiService {
      */
     @GET("index.php")
     Observable<String> getRecommend(@Query("m") String m,@Query("c") String api,@Query("a") String a,@Query("client") String client,@Query("version") String version, @Query("device_id") String deviceId);
+
+    @POST("/AndroidGame/GetHomeList")
+    Observable<String>getHomeList();
+
+    @POST("/AndroidDiscuss/GetDiscussList")
+    Observable<String>getDiscussList();
+
+    @POST("/AndroidGame/GetGameDetail")
+    Observable<String>getArticalDetail(@Query("gameId")int gameId);
+
+    @POST("/AndroidArtical/GetArticalList")
+    Observable<String>getArticalList(@Query("gameName")String gameName);
+
+    @POST("/AndroidArtical/GetArticalDetail")
+    Observable<String>getDiscussArticalDetail(@Query("articalId")int articalId);
+
+    @POST("/AndroidDiscuss/GetNewDiscussList")
+    Observable<String>getNewDiscussList(@Query("gameName")String gameName);
+
+    @POST("/AndroidDiscuss/GetQAList")
+    Observable<String>getQAList(@Query("gameName")String gameName);
+
+    @POST("/AndroidDiscuss/GetCommentList")
+    Observable<String>getCommentList(@Query("discussId")int discussId);
+
+    @POST("/AndroidDiscuss/Reply")
+    Observable<String>Reply(@Query("comment")String comment,@Query("userName")String userName,@Query("replyName")String replyName,@Query("discussId")int discussId,@Query("rcommentId")int rcommentId);
 }

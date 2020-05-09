@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.github.baby.owspace.R;
 import com.github.baby.owspace.app.GlideApp;
-import com.github.baby.owspace.model.entity.Item;
+import com.github.baby.owspace.model.entity.ArticalList;
+import com.github.baby.owspace.model.entity.HomeList;
+import com.github.baby.owspace.view.activity.ArticalDetailActivity;
 import com.github.baby.owspace.view.activity.DetailActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -22,16 +24,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by Mr.Yangxiufeng
- * DATE 2016/8/3
- * owspace
- */
-public class ArtRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+public class DiscussNewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int FOOTER_TYPE = 1001;
     private static final int CONTENT_TYPE = 1002;
-    private List<Item> artList = new ArrayList<>();
+    private List<ArticalList> articalLists = new ArrayList<>();
     private Context context;
     private boolean hasMore=true;
     private boolean error=false;
@@ -44,7 +40,7 @@ public class ArtRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         this.error = error;
     }
 
-    public ArtRecycleViewAdapter(Context context) {
+    public DiscussNewsAdapter(Context context) {
         this.context = context;
     }
 
@@ -52,10 +48,10 @@ public class ArtRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == FOOTER_TYPE){
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycleview_footer, parent, false);
-            return new FooterViewHolder(view);
+            return new DiscussNewsAdapter.FooterViewHolder(view);
         }else{
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_art, parent, false);
-            return new ArtHolder(view);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_discuss_news, parent, false);
+            return new DiscussNewsAdapter.ArtHolder(view);
         }
     }
 
@@ -70,10 +66,10 @@ public class ArtRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (position + 1 == getItemCount()) {
-            if (artList.size()==0){
+            if (articalLists.size()==0){
                 return;
             }
-            FooterViewHolder footerHolder = (FooterViewHolder)holder;
+            DiscussNewsAdapter.FooterViewHolder footerHolder = (DiscussNewsAdapter.FooterViewHolder)holder;
             if (error){
                 error = false;
                 footerHolder.avi.setVisibility(View.GONE);
@@ -96,28 +92,18 @@ public class ArtRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 footerHolder.errorTx.setVisibility(View.GONE);
             }
         } else {
-            ArtHolder artHolder = (ArtHolder) holder;
-            final Item item = artList.get(position);
-            artHolder.authorTv.setText(item.getAuthor());
-            artHolder.titleTv.setText(item.getTitle());
-            GlideApp.with(context).load(item.getThumbnail()).centerCrop().into(artHolder.imageIv);
+            DiscussNewsAdapter.ArtHolder artHolder = (DiscussNewsAdapter.ArtHolder) holder;
+            final ArticalList item = articalLists.get(position);
+            artHolder.titleTv.setText(item.getArticalName());
+            artHolder.contentTv.setText(item.getArticalIntroduce());
+            GlideApp.with(context).load(item.getArticalImage()).centerCrop().into(artHolder.imageIv);
             artHolder.typeContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    int model = Integer.valueOf(item.getModel());
-                    Intent intent=null;
-                    switch (model){
-
-                        case 1://文字
-                            intent= new Intent(context, DetailActivity.class);
-                            break;
-
-                    }
-                    if (intent != null){
-                        intent.putExtra("item",item);
-                        context.startActivity(intent);
-                    }
-
+                public void onClick(View v) {
+                    Intent intent;
+                    intent = new Intent(context, ArticalDetailActivity.class);
+                    intent.putExtra("homeList",item);
+                    context.startActivity(intent);
                 }
             });
         }
@@ -126,47 +112,39 @@ public class ArtRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public int getItemCount() {
-        return artList.size() + 1;
+        return articalLists.size() + 1;
     }
 
-    public void setArtList(List<Item> artList) {
+    public void setArtList(List<ArticalList> artList) {
         int position = artList.size() - 1;
-        this.artList.addAll(artList);
+        this.articalLists.addAll(artList);
         notifyItemChanged(position);
     }
 
-    public void replaceAllData(List<Item> artList) {
-        this.artList.clear();
-        this.artList.addAll(artList);
+    public void replaceAllData(List<ArticalList> artList) {
+        this.articalLists.clear();
+        this.articalLists.addAll(artList);
         notifyDataSetChanged();
     }
 
     public String getLastItemId() {
-        if (artList.size() == 0) {
+        if (articalLists.size() == 0) {
             return "0";
         }
-        Item item = artList.get(artList.size() - 1);
-        return item.getId();
+        ArticalList item = articalLists.get(articalLists.size() - 1);
+        return String.valueOf(item.getArticalId());
     }
 
-    public String getLastItemCreateTime() {
-        if (artList.size() == 0) {
-            return "0";
-        }
-        Item item = artList.get(artList.size() - 1);
-        return item.getCreate_time();
-    }
+
 
     static class ArtHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.image_iv)
         ImageView imageIv;
-        @BindView(R.id.arrow_iv)
-        ImageView arrowIv;
-        @BindView(R.id.title_tv)
+        @BindView(R.id.text_title_tv)
         TextView titleTv;
-        @BindView(R.id.author_tv)
-        TextView authorTv;
-        @BindView(R.id.type_container)
+        @BindView(R.id.text_content_tv)
+        TextView contentTv;
+        @BindView(R.id.discuss_container)
         RelativeLayout typeContainer;
 
         public ArtHolder(View itemView) {

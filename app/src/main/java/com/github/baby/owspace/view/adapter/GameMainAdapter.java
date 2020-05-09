@@ -12,7 +12,8 @@ import android.widget.TextView;
 
 import com.github.baby.owspace.R;
 import com.github.baby.owspace.app.GlideApp;
-import com.github.baby.owspace.model.entity.Item;
+import com.github.baby.owspace.model.entity.DiscussList;
+import com.github.baby.owspace.model.entity.HomeList;
 import com.github.baby.owspace.view.activity.DetailActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -22,16 +23,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by Mr.Yangxiufeng
- * DATE 2016/8/3
- * owspace
- */
-public class ArtRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+public class GameMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int FOOTER_TYPE = 1001;
     private static final int CONTENT_TYPE = 1002;
-    private List<Item> artList = new ArrayList<>();
+    private List<HomeList> artList = new ArrayList<>();
     private Context context;
     private boolean hasMore=true;
     private boolean error=false;
@@ -44,7 +39,7 @@ public class ArtRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         this.error = error;
     }
 
-    public ArtRecycleViewAdapter(Context context) {
+    public GameMainAdapter(Context context) {
         this.context = context;
     }
 
@@ -52,10 +47,10 @@ public class ArtRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == FOOTER_TYPE){
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycleview_footer, parent, false);
-            return new FooterViewHolder(view);
+            return new GameMainAdapter.FooterViewHolder(view);
         }else{
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_art, parent, false);
-            return new ArtHolder(view);
+            return new GameMainAdapter.ArtHolder(view);
         }
     }
 
@@ -73,7 +68,7 @@ public class ArtRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             if (artList.size()==0){
                 return;
             }
-            FooterViewHolder footerHolder = (FooterViewHolder)holder;
+            GameMainAdapter.FooterViewHolder footerHolder = (GameMainAdapter.FooterViewHolder)holder;
             if (error){
                 error = false;
                 footerHolder.avi.setVisibility(View.GONE);
@@ -96,28 +91,18 @@ public class ArtRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 footerHolder.errorTx.setVisibility(View.GONE);
             }
         } else {
-            ArtHolder artHolder = (ArtHolder) holder;
-            final Item item = artList.get(position);
-            artHolder.authorTv.setText(item.getAuthor());
-            artHolder.titleTv.setText(item.getTitle());
-            GlideApp.with(context).load(item.getThumbnail()).centerCrop().into(artHolder.imageIv);
+            GameMainAdapter.ArtHolder artHolder = (GameMainAdapter.ArtHolder) holder;
+            final HomeList item = artList.get(position);
+            artHolder.titleTv.setText(item.getGameName());
+            artHolder.authorTv.setText(item.getUserName());
+            GlideApp.with(context).load(item.getGameImage()).centerCrop().into(artHolder.imageIv);
             artHolder.typeContainer.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    int model = Integer.valueOf(item.getModel());
-                    Intent intent=null;
-                    switch (model){
-
-                        case 1://文字
-                            intent= new Intent(context, DetailActivity.class);
-                            break;
-
-                    }
-                    if (intent != null){
-                        intent.putExtra("item",item);
-                        context.startActivity(intent);
-                    }
-
+                public void onClick(View v) {
+                    Intent intent;
+                    intent = new Intent(context, DetailActivity.class);
+                    intent.putExtra("homeList",item);
+                    context.startActivity(intent);
                 }
             });
         }
@@ -129,13 +114,13 @@ public class ArtRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return artList.size() + 1;
     }
 
-    public void setArtList(List<Item> artList) {
+    public void setArtList(List<HomeList> artList) {
         int position = artList.size() - 1;
         this.artList.addAll(artList);
         notifyItemChanged(position);
     }
 
-    public void replaceAllData(List<Item> artList) {
+    public void replaceAllData(List<HomeList> artList) {
         this.artList.clear();
         this.artList.addAll(artList);
         notifyDataSetChanged();
@@ -145,17 +130,11 @@ public class ArtRecycleViewAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (artList.size() == 0) {
             return "0";
         }
-        Item item = artList.get(artList.size() - 1);
-        return item.getId();
+        HomeList item = artList.get(artList.size() - 1);
+        return String.valueOf(item.getGameId());
     }
 
-    public String getLastItemCreateTime() {
-        if (artList.size() == 0) {
-            return "0";
-        }
-        Item item = artList.get(artList.size() - 1);
-        return item.getCreate_time();
-    }
+
 
     static class ArtHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.image_iv)

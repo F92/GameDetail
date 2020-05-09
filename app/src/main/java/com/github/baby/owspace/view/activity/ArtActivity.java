@@ -14,6 +14,8 @@ import com.github.baby.owspace.R;
 import com.github.baby.owspace.app.OwspaceApplication;
 import com.github.baby.owspace.di.components.DaggerArtComponent;
 import com.github.baby.owspace.di.modules.ArtModule;
+import com.github.baby.owspace.model.entity.DiscussList;
+import com.github.baby.owspace.model.entity.HomeList;
 import com.github.baby.owspace.model.entity.Item;
 import com.github.baby.owspace.presenter.ArticalContract;
 import com.github.baby.owspace.presenter.ArticalPresenter;
@@ -149,7 +151,17 @@ public class ArtActivity extends BaseActivity implements ArticalContract.View {
     }
 
     @Override
-    public void updateListUI(List<Item> itemList) {
+    public void updateListUI3(List<HomeList> itemList) {
+
+    }
+
+    @Override
+    public void updateListUI(List<DiscussList> itemList) {
+
+    }
+
+    @Override
+    public void updateListUI2(List<Item> itemList) {
         mPtrFrame.refreshComplete();
         page++;
         if (isRefresh) {

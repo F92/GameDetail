@@ -26,6 +26,7 @@ import com.github.baby.owspace.app.OwspaceApplication;
 import com.github.baby.owspace.di.components.DaggerMainComponent;
 import com.github.baby.owspace.di.modules.MainModule;
 import com.github.baby.owspace.model.entity.Event;
+import com.github.baby.owspace.model.entity.HomeList;
 import com.github.baby.owspace.model.entity.Item;
 import com.github.baby.owspace.presenter.MainContract;
 import com.github.baby.owspace.presenter.MainPresenter;
@@ -36,6 +37,7 @@ import com.github.baby.owspace.util.tool.RxBus;
 import com.github.baby.owspace.view.adapter.VerticalPagerAdapter;
 import com.github.baby.owspace.view.fragment.ArtFragment;
 import com.github.baby.owspace.view.fragment.DiscussFragment;
+import com.github.baby.owspace.view.fragment.GameFragment;
 import com.github.baby.owspace.view.fragment.LeftMenuFragment;
 import com.github.baby.owspace.view.fragment.RightMenuFragment;
 import com.github.baby.owspace.view.widget.LunarDialog;
@@ -79,7 +81,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     private AppBarConfiguration mappBarConfiguration;
 
     private LeftMenuFragment leftMenuFragment;
-    private ArtFragment artFragment;
+    private GameFragment gameFragment;
     private DiscussFragment discussFragment;
 
     @Override
@@ -112,16 +114,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             }
         });
 
-
-
-        deviceId = AppUtil.getDeviceId(this);
-        String getLunar= PreferenceUtils.getPrefString(this,"getLunar",null);
-        if (!TimeUtil.getDate("yyyyMMdd").equals(getLunar)){
-            loadRecommend();
-        }
-        loadData(1, 0, "0", "0");
-
-
+        loadData();
 
     }
 
@@ -132,9 +125,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         leftMenuFragment = new LeftMenuFragment();
-        artFragment = new ArtFragment();
+        gameFragment = new GameFragment();
         discussFragment = new DiscussFragment();
-        transaction.add(R.id.main_fm2,artFragment,"art").hide(artFragment).add(R.id.main_fm2, discussFragment,"discuss").hide(discussFragment);
+        transaction.add(R.id.main_fm2,gameFragment,"art").hide(gameFragment).add(R.id.main_fm2, discussFragment,"discuss").hide(discussFragment);
 
         transaction.commit();
     }
@@ -149,17 +142,17 @@ public class MainActivity extends BaseActivity implements MainContract.View {
             viewPager.setVisibility(View.INVISIBLE);
             FragmentManager fm1 = getSupportFragmentManager();
             FragmentTransaction transaction1 = fm1.beginTransaction();
-            transaction1.show(discussFragment).hide(artFragment).commit();
+            transaction1.show(discussFragment).hide(gameFragment).commit();
         }else if(id == R.id.navigation_home){
             FragmentManager fm2 = getSupportFragmentManager();
             FragmentTransaction transaction2 = fm2.beginTransaction();
-            transaction2.hide(discussFragment).hide(artFragment).commit();
+            transaction2.hide(discussFragment).hide(gameFragment).commit();
             viewPager.setVisibility(View.VISIBLE);
         }else if(id == R.id.navigation_notifications){
             viewPager.setVisibility(View.INVISIBLE);
             FragmentManager fm3 = getSupportFragmentManager();
             FragmentTransaction transaction3 = fm3.beginTransaction();
-            transaction3.hide(discussFragment).show(artFragment).commit();
+            transaction3.hide(discussFragment).show(gameFragment).commit();
         }
     }
 
@@ -209,8 +202,7 @@ public class MainActivity extends BaseActivity implements MainContract.View {
                         Toast.makeText(MainActivity.this,"正在努力加载...",Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    Logger.i("page=" + page + ",getLastItemId=" + pagerAdapter.getLastItemId());
-                    loadData(page, 0, pagerAdapter.getLastItemId(), pagerAdapter.getLastItemCreateTime());
+                    loadData();
                 }
             }
 
@@ -227,12 +219,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
 
     }
 
-    private void loadData(int page, int mode, String pageId, String createTime) {
+    private void loadData() {
         isLoading = true;
-        presenter.getListByPage(page, mode, pageId, deviceId, createTime);
-    }
-    private void loadRecommend(){
-        presenter.getRecommend(deviceId);
+        presenter.GetHomeList();
     }
 
     @Override
@@ -285,9 +274,9 @@ public class MainActivity extends BaseActivity implements MainContract.View {
     }
 
     @Override
-    public void updateListUI(List<Item> itemList) {
+    public void updateListUI(List<HomeList> homeLists) {
         isLoading = false;
-        pagerAdapter.setDataList(itemList);
+        pagerAdapter.setDataList(homeLists);
         page++;
     }
 

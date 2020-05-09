@@ -11,39 +11,33 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.github.baby.owspace.R;
 import com.github.baby.owspace.app.GlideApp;
 import com.github.baby.owspace.app.OwspaceApplication;
 import com.github.baby.owspace.di.components.DaggerDetailComponent;
 import com.github.baby.owspace.di.modules.DetailModule;
-import com.github.baby.owspace.model.entity.DetailEntity;
-import com.github.baby.owspace.model.entity.Item;
+import com.github.baby.owspace.model.entity.ArticalList;
+import com.github.baby.owspace.model.entity.HomeList;
 import com.github.baby.owspace.presenter.DetailContract;
 import com.github.baby.owspace.presenter.DetailPresenter;
 import com.github.baby.owspace.util.AppUtil;
 import com.github.baby.owspace.util.tool.AnalysisHTML;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
  * Created by Mr.Yangxiufeng
- * DATE 2016/11/8
+ * DATE 2016/8/9
  * owspace
  */
-
-public class VideoDetailActivity extends BaseActivity implements DetailContract.View {
-
-
-    @Inject
-    DetailPresenter presenter;
+public class ArticalDetailActivity extends BaseActivity implements DetailContract.View, ObservableScrollViewCallbacks {
     @BindView(R.id.favorite)
     ImageView favorite;
     @BindView(R.id.write)
@@ -52,35 +46,38 @@ public class VideoDetailActivity extends BaseActivity implements DetailContract.
     ImageView share;
     @BindView(R.id.toolBar)
     Toolbar toolBar;
-    @BindView(R.id.video)
-    JCVideoPlayerStandard video;
-    @BindView(R.id.news_top_img_under_line)
-    View newsTopImgUnderLine;
+    @BindView(R.id.webView)
+    WebView webView;
+    @BindView(R.id.scrollView)
+    ObservableScrollView scrollView;
+    @BindView(R.id.image)
+    ImageView image;
+    @BindView(R.id.news_parse_web)
+    LinearLayout newsParseWeb;
     @BindView(R.id.news_top_type)
     TextView newsTopType;
-    @BindView(R.id.news_top_date)
-    TextView newsTopDate;
     @BindView(R.id.news_top_title)
     TextView newsTopTitle;
     @BindView(R.id.news_top_author)
     TextView newsTopAuthor;
     @BindView(R.id.news_top_lead)
     TextView newsTopLead;
-    @BindView(R.id.news_top_lead_line)
-    View newsTopLeadLine;
     @BindView(R.id.news_top)
     LinearLayout newsTop;
-    @BindView(R.id.news_parse_web)
-    LinearLayout newsParseWeb;
-    @BindView(R.id.webView)
-    WebView webView;
-    @BindView(R.id.scrollView)
-    ObservableScrollView scrollView;
+    @BindView(R.id.news_top_img_under_line)
+    View newsTopImgUnderLine;
+    @BindView(R.id.news_top_lead_line)
+    View newsTopLeadLine;
+    @Inject
+    DetailPresenter presenter;
+    private int mParallaxImageHeight;
+
+    private int length;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video_detail);
+        setContentView(R.layout.activity_art_detail);
         ButterKnife.bind(this);
         initView();
         initPresenter();
@@ -90,29 +87,32 @@ public class VideoDetailActivity extends BaseActivity implements DetailContract.
     protected void onStart() {
         super.onStart();
         Bundle bundle = getIntent().getExtras();
-        Item item = bundle.getParcelable("item");
-        if (item != null){
-            video.setUp(item.getVideo(), JCVideoPlayer.SCREEN_LAYOUT_LIST,"");
-            GlideApp.with(this).load(item.getThumbnail()).centerCrop().into(video.thumbImageView);
-            newsTopType.setText("视 频");
+        ArticalList homeList = (ArticalList) bundle.getSerializable("homeList");
+        if (homeList != null){
+            GlideApp.with(this).load(homeList.getArticalImage()).centerCrop().into(image);
             newsTopLeadLine.setVisibility(View.VISIBLE);
             newsTopImgUnderLine.setVisibility(View.VISIBLE);
-            newsTopDate.setText(item.getUpdate_time());
-            newsTopTitle.setText(item.getTitle());
-            newsTopAuthor.setText(item.getAuthor());
-            newsTopLead.setText(item.getLead());
-            presenter.getDetail(item.getId());
+            newsTopType.setText("游 戏");
+            newsTopTitle.setText(homeList.getArticalName());
+            newsTopAuthor.setText(homeList.getUserName());
+            newsTopLead.setText(homeList.getArticalIntroduce());
+            newsTopLead.setLineSpacing(1.5f,1.8f);
+            presenter.getArticalDetail(homeList.getArticalId());
+            this.length = homeList.getArticalIntroduce().trim().length();
         }
-    }
 
-    private void initPresenter() {
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+    private void initPresenter(){
         DaggerDetailComponent.builder()
                 .netComponent(OwspaceApplication.get(this).getNetComponent())
                 .detailModule(new DetailModule(this))
                 .build()
                 .inject(this);
     }
-
     private void initView() {
         setSupportActionBar(toolBar);
         ActionBar actionBar = getSupportActionBar();
@@ -125,6 +125,8 @@ public class VideoDetailActivity extends BaseActivity implements DetailContract.
             }
         });
         toolBar.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, getResources().getColor(R.color.primary)));
+        scrollView.setScrollViewCallbacks(this);
+        mParallaxImageHeight = getResources().getDimensionPixelSize(R.dimen.parallax_image_height);
     }
 
     private void initWebViewSetting() {
@@ -148,26 +150,33 @@ public class VideoDetailActivity extends BaseActivity implements DetailContract.
     }
 
     @Override
-    public void updateListUI(DetailEntity detailEntity) {
-        if (detailEntity.getParseXML() == 1) {
-            newsTopLeadLine.setVisibility(View.VISIBLE);
-            newsTopImgUnderLine.setVisibility(View.VISIBLE);
-            int i = detailEntity.getLead().trim().length();
-            AnalysisHTML analysisHTML = new AnalysisHTML();
-            analysisHTML.loadHtml(this, detailEntity.getContent(), analysisHTML.HTML_STRING, newsParseWeb, i);
-        } else {
-            initWebViewSetting();
-            newsParseWeb.setVisibility(View.GONE);
-            video.setVisibility(View.GONE);
-            webView.setVisibility(View.VISIBLE);
-            newsTop.setVisibility(View.GONE);
-            webView.loadUrl(addParams2WezeitUrl(detailEntity.getHtml5(), false));
-        }
+    public void updateListUI(String detail) {
+        AnalysisHTML analysisHTML = new AnalysisHTML();
+        analysisHTML.loadHtml(this, detail, analysisHTML.HTML_STRING, newsParseWeb, this.length);
+        newsTopType.setText("游 戏");
 
     }
 
     @Override
     public void showOnFailure() {
+
+    }
+
+    @Override
+    public void onScrollChanged(int i, boolean b, boolean b1) {
+        int baseColor = getResources().getColor(R.color.primary);
+        float alpha = Math.min(1, (float) i / mParallaxImageHeight);
+        toolBar.setBackgroundColor(ScrollUtils.getColorWithAlpha(alpha, baseColor));
+//        ViewHelper.setTranslationY(image, i / 2);
+    }
+
+    @Override
+    public void onDownMotionEvent() {
+
+    }
+
+    @Override
+    public void onUpOrCancelMotionEvent(ScrollState scrollState) {
 
     }
 
@@ -185,17 +194,4 @@ public class VideoDetailActivity extends BaseActivity implements DetailContract.
         return localStringBuffer.toString();
     }
 
-    @Override
-    public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
-            return;
-        }
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onPause() {
-        JCVideoPlayer.releaseAllVideos();
-        super.onPause();
-    }
 }

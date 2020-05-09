@@ -9,12 +9,13 @@ import com.github.baby.owspace.model.entity.DetailEntity;
  */
 public interface DetailContract {
     interface Presenter{
-        void getDetail(String itemId);
+        void getDetail(int gameId);
+        void getArticalDetail(int articalId);
     }
     interface View{
         void showLoading();
         void dismissLoading();
-        void updateListUI(DetailEntity detailEntity);
+        void updateListUI(String detail);
         void showOnFailure();
     }
 }

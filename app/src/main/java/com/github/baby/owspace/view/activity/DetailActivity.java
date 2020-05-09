@@ -18,6 +18,7 @@ import com.github.baby.owspace.app.OwspaceApplication;
 import com.github.baby.owspace.di.components.DaggerDetailComponent;
 import com.github.baby.owspace.di.modules.DetailModule;
 import com.github.baby.owspace.model.entity.DetailEntity;
+import com.github.baby.owspace.model.entity.HomeList;
 import com.github.baby.owspace.model.entity.Item;
 import com.github.baby.owspace.presenter.DetailContract;
 import com.github.baby.owspace.presenter.DetailPresenter;
@@ -57,8 +58,6 @@ public class DetailActivity extends BaseActivity implements DetailContract.View,
     LinearLayout newsParseWeb;
     @BindView(R.id.news_top_type)
     TextView newsTopType;
-    @BindView(R.id.news_top_date)
-    TextView newsTopDate;
     @BindView(R.id.news_top_title)
     TextView newsTopTitle;
     @BindView(R.id.news_top_author)
@@ -75,6 +74,8 @@ public class DetailActivity extends BaseActivity implements DetailContract.View,
     DetailPresenter presenter;
     private int mParallaxImageHeight;
 
+    private int length;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,19 +89,18 @@ public class DetailActivity extends BaseActivity implements DetailContract.View,
     protected void onStart() {
         super.onStart();
         Bundle bundle = getIntent().getExtras();
-        Item item = bundle.getParcelable("item");
-        if (item != null){
-            GlideApp.with(this).load(item.getThumbnail()).centerCrop().into(image);
-            int mode = Integer.valueOf(item.getModel());
+        HomeList homeList = (HomeList) bundle.getSerializable("homeList");
+        if (homeList != null){
+            GlideApp.with(this).load(homeList.getGameImage()).centerCrop().into(image);
             newsTopLeadLine.setVisibility(View.VISIBLE);
             newsTopImgUnderLine.setVisibility(View.VISIBLE);
-            newsTopType.setText("文 字");
-            newsTopDate.setText(item.getUpdate_time());
-            newsTopTitle.setText(item.getTitle());
-            newsTopAuthor.setText(item.getAuthor());
-            newsTopLead.setText(item.getLead());
+            newsTopType.setText("游 戏");
+            newsTopTitle.setText(homeList.getGameName());
+            newsTopAuthor.setText(homeList.getUserName());
+            newsTopLead.setText(homeList.getGameIntroduce());
             newsTopLead.setLineSpacing(1.5f,1.8f);
-            presenter.getDetail(item.getId());
+            presenter.getDetail(homeList.getGameId());
+            this.length = homeList.getGameIntroduce().trim().length();
         }
 
     }
@@ -152,20 +152,10 @@ public class DetailActivity extends BaseActivity implements DetailContract.View,
     }
 
     @Override
-    public void updateListUI(DetailEntity detailEntity) {
-        if (detailEntity.getParseXML() == 1) {
-            int i = detailEntity.getLead().trim().length();
-            AnalysisHTML analysisHTML = new AnalysisHTML();
-            analysisHTML.loadHtml(this, detailEntity.getContent(), analysisHTML.HTML_STRING, newsParseWeb, i);
-            newsTopType.setText("文 字");
-        } else {
-            initWebViewSetting();
-            newsParseWeb.setVisibility(View.GONE);
-            image.setVisibility(View.GONE);
-            webView.setVisibility(View.VISIBLE);
-            newsTop.setVisibility(View.GONE);
-            webView.loadUrl(addParams2WezeitUrl(detailEntity.getHtml5(), false));
-        }
+    public void updateListUI(String detail) {
+        AnalysisHTML analysisHTML = new AnalysisHTML();
+        analysisHTML.loadHtml(this, detail, analysisHTML.HTML_STRING, newsParseWeb, this.length);
+        newsTopType.setText("游 戏");
 
     }
 

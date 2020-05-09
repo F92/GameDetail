@@ -54,8 +54,6 @@ public class VerticalRecycleViewAdapter extends RecyclerView.Adapter<VerticalRec
             holder.pagerContent.setVisibility(View.VISIBLE);
             holder.homeAdvertiseIv.setVisibility(View.GONE);
             GlideApp.with(context).load(item.getThumbnail()).centerCrop().into(holder.imageIv);
-            holder.commentTv.setText(item.getComment());
-            holder.likeTv.setText(item.getGood());
             holder.readcountTv.setText(item.getView());
             holder.titleTv.setText(item.getTitle());
             holder.contentTv.setText(item.getExcerpt());
@@ -63,18 +61,18 @@ public class VerticalRecycleViewAdapter extends RecyclerView.Adapter<VerticalRec
             holder.typeTv.setText(item.getCategory());
             switch (model) {
                 case 2:
-                    holder.imageType.setVisibility(View.VISIBLE);
+
                     holder.downloadStartWhite.setVisibility(View.GONE);
-                    holder.imageType.setImageResource(R.drawable.library_video_play_symbol);
+
                     break;
                 case 3:
-                    holder.imageType.setVisibility(View.VISIBLE);
+
                     holder.downloadStartWhite.setVisibility(View.VISIBLE);
-                    holder.imageType.setImageResource(R.drawable.library_voice_play_symbol);
+
                     break;
                 default:
                     holder.downloadStartWhite.setVisibility(View.GONE);
-                    holder.imageType.setVisibility(View.GONE);
+
             }
         }
         holder.typeContainer.setOnClickListener(new View.OnClickListener() {
@@ -121,11 +119,6 @@ public class VerticalRecycleViewAdapter extends RecyclerView.Adapter<VerticalRec
         ImageView imageIv;
         @BindView(R.id.type_container)
         LinearLayout typeContainer;
-        @BindView(R.id.comment_tv)
-        TextView commentTv;
-        @BindView(R.id.like_tv)
-        TextView likeTv;
-        @BindView(R.id.readcount_tv)
         TextView readcountTv;
         @BindView(R.id.title_tv)
         TextView titleTv;
@@ -135,11 +128,6 @@ public class VerticalRecycleViewAdapter extends RecyclerView.Adapter<VerticalRec
         TextView authorTv;
         @BindView(R.id.type_tv)
         TextView typeTv;
-        @BindView(R.id.time_tv)
-        TextView timeTv;
-        @BindView(R.id.image_type)
-        ImageView imageType;
-        @BindView(R.id.download_start_white)
         ImageView downloadStartWhite;
         @BindView(R.id.home_advertise_iv)
         ImageView homeAdvertiseIv;

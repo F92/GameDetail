@@ -1,9 +1,13 @@
 package com.github.baby.owspace.presenter;
 
 import com.github.baby.owspace.model.api.ApiService;
+import com.github.baby.owspace.model.entity.DiscussList;
+import com.github.baby.owspace.model.entity.HomeList;
 import com.github.baby.owspace.model.entity.Item;
 import com.github.baby.owspace.model.entity.Result;
 import com.github.baby.owspace.util.TimeUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
 
@@ -48,11 +52,59 @@ public class ArticalPresenter implements ArticalContract.Presenter{
                    public void onNext(Result.Data<List<Item>> listData) {
                        int size = listData.getDatas().size();
                        if(size>0){
-                           view.updateListUI(listData.getDatas());
+                           view.updateListUI2(listData.getDatas());
                        }else {
                            view.showNoMore();
                        }
                    }
                });
+    }
+
+    @Override
+    public void getDiscussList() {
+        apiService.getDiscussList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        List<DiscussList>homeLists = new Gson().fromJson(s, new TypeToken<List<DiscussList>>(){}.getType());
+                        view.updateListUI(homeLists);
+                    }
+                });
+    }
+
+    @Override
+    public void getGameList() {
+        apiService.getHomeList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        List<HomeList>homeLists = new Gson().fromJson(s, new TypeToken<List<HomeList>>(){}.getType());
+                        view.updateListUI3(homeLists);
+                    }
+                });
     }
 }

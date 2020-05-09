@@ -30,22 +30,7 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
 
-            <ImageView
-                android:id="@+id/image_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true" />
 
-            <ImageView
-                android:id="@+id/download_start_white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="15dp"
-                android:layout_marginRight="15dp"
-                android:src="@drawable/download_start_white"
-                android:visibility="gone" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -72,14 +57,7 @@
                 android:textColor="#ffffffff"
                 android:textSize="8.0sp" />
 
-            <TextView
-                android:id="@+id/time_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:textColor="#ff808080"
-                android:textSize="11.0sp"
-                android:visibility="gone" />
+
 
         </RelativeLayout>
 
@@ -134,44 +112,7 @@
             android:textSize="18.0sp" />
 
 
-        <RelativeLayout
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15.0dip"
-            android:layout_marginRight="15.0dip">
 
-            <TextView
-                android:id="@+id/comment_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="31.0dip"
-                android:drawableLeft="@drawable/paper_comment"
-                android:drawablePadding="5.0dip"
-                android:gravity="center"
-                android:textColor="@color/pagefragment_textcolor_cust1"
-                android:textSize="10.0sp" />
-
-            <TextView
-                android:id="@+id/like_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="31.0dip"
-                android:layout_marginLeft="10.0dip"
-                android:layout_toRightOf="@id/comment_tv"
-                android:drawableLeft="@drawable/paper_like"
-                android:drawablePadding="5.0dip"
-                android:gravity="center"
-                android:textColor="@color/pagefragment_textcolor_cust1"
-                android:textSize="10.0sp" />
-
-            <TextView
-                android:id="@+id/readcount_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="31.0dip"
-                android:layout_alignParentRight="true"
-                android:gravity="center"
-                android:textColor="@color/pagefragment_textcolor_cust1"
-                android:textSize="10.0sp" />
-        </RelativeLayout>
     </RelativeLayout>
 
 
