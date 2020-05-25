@@ -163,6 +163,11 @@ public class ArticalDetailActivity extends BaseActivity implements DetailContrac
     }
 
     @Override
+    public void buySuccess(String info) {
+
+    }
+
+    @Override
     public void onScrollChanged(int i, boolean b, boolean b1) {
         int baseColor = getResources().getColor(R.color.primary);
         float alpha = Math.min(1, (float) i / mParallaxImageHeight);

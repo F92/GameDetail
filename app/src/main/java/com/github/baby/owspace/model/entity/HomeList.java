@@ -11,6 +11,15 @@ public class HomeList implements Serializable {
     String gameIntroduce;
     String userName;
     String gameImage;
+    String gamePrice;
+
+    public String getGamePrice() {
+        return gamePrice;
+    }
+
+    public void setGamePrice(String gamePrice) {
+        this.gamePrice = gamePrice;
+    }
 
     public int getGameId() {
         return gameId;

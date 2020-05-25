@@ -11,11 +11,13 @@ public interface DetailContract {
     interface Presenter{
         void getDetail(int gameId);
         void getArticalDetail(int articalId);
+        void buy(String userName,String gameName);
     }
     interface View{
         void showLoading();
         void dismissLoading();
         void updateListUI(String detail);
         void showOnFailure();
+        void buySuccess(String info);
     }
 }

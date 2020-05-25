@@ -12,7 +12,7 @@ import java.util.List;
 public class DiscussFragmentPaperAdapter extends FragmentPagerAdapter {
     private FragmentManager fragmentManager;
     private List<Fragment> fragmentList;
-    private String[] title = {"更新","讨论","提问"};
+    private String[] title = {"文章","讨论","提问"};
     private List<String> titlelist = new ArrayList<>();
     public DiscussFragmentPaperAdapter(FragmentManager fm,List<Fragment> list) {
         super(fm);

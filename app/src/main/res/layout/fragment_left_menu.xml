@@ -102,15 +102,7 @@
             android:text="单向历" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/column_ll"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50.0dip"
-        android:text="Powered by OWSPACE"
-        android:textColor="#ff888888"
-        android:textSize="7.0sp" />
+
 
 
 </RelativeLayout>

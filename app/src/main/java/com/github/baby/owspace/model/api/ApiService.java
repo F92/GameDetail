@@ -93,4 +93,7 @@ public interface ApiService {
 
     @POST("/AndroidDiscuss/Reply")
     Observable<String>Reply(@Query("comment")String comment,@Query("userName")String userName,@Query("replyName")String replyName,@Query("discussId")int discussId,@Query("rcommentId")int rcommentId);
+
+    @POST("/AndroidGame/Buy")
+    Observable<String>buy(@Query("userName")String userName,@Query("gameName")String gameName);
 }

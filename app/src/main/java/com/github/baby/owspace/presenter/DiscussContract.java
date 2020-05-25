@@ -27,5 +27,6 @@ public interface DiscussContract {
         void updateListDiscuss(List<DiscussNewList> itemList);
         void updateListContent(List<DiscussContentList> itemList);
         void showOnFailure();
+
     }
 }

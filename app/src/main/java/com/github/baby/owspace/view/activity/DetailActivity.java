@@ -1,5 +1,6 @@
 package com.github.baby.owspace.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -7,9 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.github.baby.owspace.R;
@@ -18,6 +21,7 @@ import com.github.baby.owspace.app.OwspaceApplication;
 import com.github.baby.owspace.di.components.DaggerDetailComponent;
 import com.github.baby.owspace.di.modules.DetailModule;
 import com.github.baby.owspace.model.entity.DetailEntity;
+import com.github.baby.owspace.model.entity.DiscussList;
 import com.github.baby.owspace.model.entity.HomeList;
 import com.github.baby.owspace.model.entity.Item;
 import com.github.baby.owspace.presenter.DetailContract;
@@ -70,6 +74,13 @@ public class DetailActivity extends BaseActivity implements DetailContract.View,
     View newsTopImgUnderLine;
     @BindView(R.id.news_top_lead_line)
     View newsTopLeadLine;
+    @BindView(R.id.enter)
+    Button enter;
+    @BindView(R.id.price)
+    TextView price;
+    @BindView(R.id.buy)
+    Button buy;
+
     @Inject
     DetailPresenter presenter;
     private int mParallaxImageHeight;
@@ -89,7 +100,7 @@ public class DetailActivity extends BaseActivity implements DetailContract.View,
     protected void onStart() {
         super.onStart();
         Bundle bundle = getIntent().getExtras();
-        HomeList homeList = (HomeList) bundle.getSerializable("homeList");
+        final HomeList homeList = (HomeList) bundle.getSerializable("homeList");
         if (homeList != null){
             GlideApp.with(this).load(homeList.getGameImage()).centerCrop().into(image);
             newsTopLeadLine.setVisibility(View.VISIBLE);
@@ -99,6 +110,24 @@ public class DetailActivity extends BaseActivity implements DetailContract.View,
             newsTopAuthor.setText(homeList.getUserName());
             newsTopLead.setText(homeList.getGameIntroduce());
             newsTopLead.setLineSpacing(1.5f,1.8f);
+            price.setText("价格："+homeList.getGamePrice()+"元");
+            final DiscussList discussList = new DiscussList();
+            discussList.setGameName(homeList.getGameName());
+            enter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(DetailActivity.this,DiscussActivity.class);
+                    intent.putExtra("discussList",discussList);
+                    startActivity(intent);
+
+                }
+            });
+            buy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    presenter.buy("UBIboy",homeList.getGameName());
+                }
+            });
             presenter.getDetail(homeList.getGameId());
             this.length = homeList.getGameIntroduce().trim().length();
         }
@@ -162,6 +191,11 @@ public class DetailActivity extends BaseActivity implements DetailContract.View,
     @Override
     public void showOnFailure() {
 
+    }
+
+    @Override
+    public void buySuccess(String info) {
+        Toast.makeText(this,info,Toast.LENGTH_SHORT).show();
     }
 
     @Override

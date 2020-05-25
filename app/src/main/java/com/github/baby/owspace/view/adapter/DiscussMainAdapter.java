@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.github.baby.owspace.presenter.DiscussContract;
 import com.github.baby.owspace.view.activity.DetailActivity;
 import com.github.baby.owspace.view.activity.DiscussActivity;
 import com.github.baby.owspace.view.activity.DiscussContentActivity;
+import com.github.baby.owspace.view.activity.SearchActivity;
 import com.google.gson.internal.$Gson$Preconditions;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -120,6 +122,14 @@ public class DiscussMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     context.startActivity(intent);
                 }
             });
+            artHolder.editText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent;
+                    intent = new Intent(context, SearchActivity.class);
+                    context.startActivity(intent);
+                }
+            });
         }
 
     }
@@ -158,6 +168,8 @@ public class DiscussMainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ImageView arrowIv;
         @BindView(R.id.game_tv)
         TextView gameTv;
+        @BindView(R.id.title)
+        EditText editText;
         @BindView(R.id.title_tv)
         TextView titleTv;
         @BindView(R.id.content_tv)

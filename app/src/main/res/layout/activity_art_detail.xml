@@ -9,7 +9,8 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:layout_marginBottom="50dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -119,6 +120,37 @@
         </LinearLayout>
 
     </com.github.ksoichiro.android.observablescrollview.ObservableScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:background="#E1FFFF"
+            android:text="进入论坛"
+            android:textSize="20dp"
+            android:id="@+id/enter"></Button>
+        <TextView
+            android:gravity="center_vertical|right"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:text="价格50美元"
+            android:id="@+id/price"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="right"
+            android:text="购买"
+            android:id="@+id/buy"></Button>
+
+    </LinearLayout>
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"

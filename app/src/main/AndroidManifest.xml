@@ -49,6 +49,9 @@
         <activity android:name=".view.activity.DiscussContentActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="fullSensor"/>
+        <activity android:name=".view.activity.SearchActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="fullSensor"/>
 
 
         <service android:name=".player.PlaybackService">

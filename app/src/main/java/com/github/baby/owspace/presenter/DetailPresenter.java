@@ -1,9 +1,12 @@
 package com.github.baby.owspace.presenter;
 
 
+import android.widget.Toast;
+
 import com.github.baby.owspace.model.api.ApiService;
 import com.github.baby.owspace.model.entity.DetailEntity;
 import com.github.baby.owspace.model.entity.Result;
+import com.github.baby.owspace.view.activity.DetailActivity;
 
 import javax.inject.Inject;
 
@@ -69,6 +72,29 @@ public class DetailPresenter implements DetailContract.Presenter {
                     @Override
                     public void onNext(String s) {
                         view.updateListUI(s);
+                    }
+                });
+    }
+
+    @Override
+    public void buy(String userName, String gameName) {
+        apiService.buy(userName,gameName)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        view.buySuccess(s);
                     }
                 });
     }
