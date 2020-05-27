@@ -1,8 +1,10 @@
 package com.github.baby.owspace.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +26,7 @@ import com.github.baby.owspace.model.entity.HomeList;
 import com.github.baby.owspace.presenter.DiscussContract;
 import com.github.baby.owspace.presenter.DiscussPresenter;
 import com.github.baby.owspace.util.AppUtil;
+import com.github.baby.owspace.view.activity.PublishDiscussActivity;
 import com.github.baby.owspace.view.adapter.DiscussNewAdapter;
 import com.github.baby.owspace.view.adapter.DiscussNewsAdapter;
 import com.github.baby.owspace.view.widget.CustomPtrHeader;
@@ -44,6 +47,8 @@ public class DiscussNewFragment extends Fragment implements DiscussContract.View
     RecyclerView recycleView;
     @BindView(R.id.ptrFrameLayout)
     PtrClassicFrameLayout mPtrFrame;
+    @BindView(R.id.button_discuss)
+    FloatingActionButton button_discuss;
     @Inject
     DiscussPresenter discussPresenter;
 
@@ -79,8 +84,22 @@ public class DiscussNewFragment extends Fragment implements DiscussContract.View
         this.gameName = gameName;
         initPresenter();
         initView();
+        button_discuss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                publish();
+            }
+        });
 
     }
+
+    private void publish(){
+        Intent intent;
+        intent = new Intent(getActivity(), PublishDiscussActivity.class);
+        intent.putExtra("gameName",gameName);
+        startActivity(intent);
+    }
+
     private void initPresenter(){
         DaggerDiscussComponent.builder()
                 .discussModule(new DiscussModule(this))

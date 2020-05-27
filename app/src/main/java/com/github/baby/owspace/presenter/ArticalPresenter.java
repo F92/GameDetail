@@ -107,4 +107,28 @@ public class ArticalPresenter implements ArticalContract.Presenter{
                     }
                 });
     }
+
+    @Override
+    public void searchGame(String gameName) {
+        apiService.SearchDiscuss(gameName)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        List<HomeList> homeLists = new Gson().fromJson(s, new TypeToken<List<HomeList>>(){}.getType());
+                        view.updateListUI3(homeLists);
+                    }
+                });
+    }
 }

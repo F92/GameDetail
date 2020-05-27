@@ -96,4 +96,10 @@ public interface ApiService {
 
     @POST("/AndroidGame/Buy")
     Observable<String>buy(@Query("userName")String userName,@Query("gameName")String gameName);
+
+    @POST("/AndroidGame/SearchDiscuss")
+    Observable<String>SearchDiscuss(@Query("gameName")String gameName);
+
+    @POST("/AndroidDiscuss/Publish")
+    Observable<String>Publish(@Query("title") String title, @Query("content") String content, @Query("type") String type, @Query("gameName") String gameName, @Query("userName") String userName);
 }

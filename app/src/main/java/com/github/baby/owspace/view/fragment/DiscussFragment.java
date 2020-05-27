@@ -25,6 +25,7 @@ import com.github.baby.owspace.model.entity.Item;
 import com.github.baby.owspace.presenter.ArticalContract;
 import com.github.baby.owspace.presenter.ArticalPresenter;
 import com.github.baby.owspace.util.AppUtil;
+import com.github.baby.owspace.view.activity.SearchActivity;
 import com.github.baby.owspace.view.adapter.ArtRecycleViewAdapter;
 import com.github.baby.owspace.view.adapter.DiscussMainAdapter;
 import com.github.baby.owspace.view.widget.CustomPtrHeader;
@@ -73,12 +74,14 @@ public class DiscussFragment extends Fragment implements ArticalContract.View {
     @Override
     public void onResume() {
         super.onResume();
-
-        search.setOnClickListener(new View.OnClickListener() {
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View v) {
-                String editValue = String.valueOf(editText.getText());
-
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    Intent intent;
+                    intent = new Intent(getActivity(), SearchActivity.class);
+                    startActivity(intent);
+                }
             }
         });
         Intent intent = getActivity().getIntent();
@@ -170,15 +173,7 @@ public class DiscussFragment extends Fragment implements ArticalContract.View {
     @Override
     public void updateListUI(List<DiscussList> itemList) {
         mPtrFrame.refreshComplete();
-        if (isRefresh) {
-            discussMainAdapter.setHasMore(false);
-            discussMainAdapter.setError(true);
-            isRefresh = false;
-            discussMainAdapter.replaceAllData(itemList);
-            discussMainAdapter.setError(false);
-        } else {
-            discussMainAdapter.setArtList(itemList);
-        }
+        discussMainAdapter.replaceAllData(itemList);
     }
 
     @Override

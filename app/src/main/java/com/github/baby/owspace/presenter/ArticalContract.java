@@ -17,6 +17,7 @@ public interface ArticalContract {
 
         void getDiscussList();
         void getGameList();
+        void searchGame(String gameName);
     }
     interface View{
         void showLoading();

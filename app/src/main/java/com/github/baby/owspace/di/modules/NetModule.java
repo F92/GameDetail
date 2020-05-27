@@ -42,7 +42,7 @@ public class NetModule {
     public Retrofit provideRetrofit(OkHttpClient okhttpClient) {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(okhttpClient)
-                .baseUrl("http://192.168.138.148:443/")
+                .baseUrl("http://192.168.3.15:443/")
                 .addConverterFactory(StringConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(EntityUtils.gson))//
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

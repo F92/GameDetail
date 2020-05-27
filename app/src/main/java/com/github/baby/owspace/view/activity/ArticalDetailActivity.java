@@ -77,7 +77,7 @@ public class ArticalDetailActivity extends BaseActivity implements DetailContrac
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_art_detail);
+        setContentView(R.layout.activity_artical);
         ButterKnife.bind(this);
         initView();
         initPresenter();

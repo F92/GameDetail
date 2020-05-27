@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,13 +74,7 @@ public class GameFragment extends Fragment implements ArticalContract.View {
     public void onResume() {
         super.onResume();
 
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String editValue = String.valueOf(editText.getText());
 
-            }
-        });
         Intent intent = getActivity().getIntent();
         mode = intent.getIntExtra("mode", 1);
         initPresenter();
@@ -97,6 +93,10 @@ public class GameFragment extends Fragment implements ArticalContract.View {
     }
     private void loadData() {
         presenter.getGameList();
+    }
+
+    private void searchData(String gameName){
+        presenter.searchGame(gameName);
     }
 
     private void initView() {
@@ -121,15 +121,21 @@ public class GameFragment extends Fragment implements ArticalContract.View {
         CustomPtrHeader header = new CustomPtrHeader(getActivity(),mode);
         mPtrFrame.setHeaderView(header);
         mPtrFrame.addPtrUIHandler(header);
-        recycleView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                lastVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                isRefresh = true;
+                searchData(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }
@@ -163,15 +169,9 @@ public class GameFragment extends Fragment implements ArticalContract.View {
     @Override
     public void updateListUI3(List<HomeList> itemList) {
         mPtrFrame.refreshComplete();
-        if (isRefresh) {
-            gameMainAdapter.setHasMore(false);
-            gameMainAdapter.setError(true);
-            isRefresh = false;
-            gameMainAdapter.replaceAllData(itemList);
-            gameMainAdapter.setError(false);
-        } else {
-            gameMainAdapter.setArtList(itemList);
-        }
+        gameMainAdapter.replaceAllData(itemList);
+        gameMainAdapter.setHasMore(false);
+
     }
 
     @Override

@@ -9,14 +9,14 @@ import java.util.List;
 public interface SearchContract {
     interface Presenter{
         void getGameList();
-        void getDiscussList();
+        void getDiscussList(String gameName);
     }
     interface View{
         void showLoading();
         void dismissLoading();
         void showNoData();
         void showNoMore();
-        void updateListUI(List<DiscussList> itemList);
+        void updateListUI(List<HomeList> itemList);
         void updateListUI2(List<HomeList> itemList);
         void showOnFailure();
     }
